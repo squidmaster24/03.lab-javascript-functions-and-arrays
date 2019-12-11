@@ -2,7 +2,7 @@
 let firstNumber = 56;
 let secondNumber = 56;
 
-console.log(maxOfTwoNumbers(firstNumber, secondNumber));
+maxOfTwoNumbers(firstNumber, secondNumber);
 
 function maxOfTwoNumbers(number1, number2) {
   return number1 > number2 ? number1 : number2;
@@ -20,13 +20,13 @@ const words = [
   "crackpot"
 ];
 
-console.log(findLongestWord(words));
+findLongestWord(words);
 
 function findLongestWord(wordsArray) {
-  let largestWord = String;
+  let largestWord = null;
   let numberOfLetters = 0;
   for (i = 0; i < wordsArray.length; i++) {
-    if (wordsArray[i].length > numberOfLetters) {
+    if (numberOfLetters < wordsArray[i].length) {
       numberOfLetters = wordsArray[i].length;
       largestWord = wordsArray[i];
     }
@@ -43,7 +43,7 @@ console.log(sumArray(numbers));
 function sumArray(numbersArray) {
   let totalSum = 0;
   for (i = 0; i < numbersArray.length; i++) {
-    totalSum = totalSum + numbersArray[i];
+    totalSum += numbersArray[i];
   }
   return totalSum;
 }
@@ -52,12 +52,18 @@ function sumArray(numbersArray) {
 // Level 1: Array of numbers
 const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 
-let sum = sumArray(numbersAvg);
-
-function averageNumbers(sum) {
-  return sum / numbersAvg.length;
+function averageNumbers(numberArray) {
+  let average = null;
+  let sumNumbers = sumArray(numberArray);
+  if (numberArray.length > 0) {
+    average = sumNumbers / numberArray.length;
+  }
+  return average;
 }
-console.log(averageNumbers(sum));
+
+// function averageNumbers(numberArray) {
+//   return numberArray.length > 0 ? sumArray(numberArray) / numberArray.length : undefined;
+// }
 
 // Level 2: Array of strings
 const wordsArr = [
@@ -75,16 +81,29 @@ const wordsArr = [
 
 averageWordLength(wordsArr);
 
+// function averageWordLength(wordArray) {
+//   var wordsLength = [];
+
+//   for (var i = 0; i < wordArray.length; i++) {
+//     wordsLength[i] = wordArray[i].length;
+//   }
+
+//   return wordArray.length > 0 ? sumArray(wordsLength) / wordArray.length : null;
+// }
+
 function averageWordLength(wordsArray) {
-  let wordsLength = 0;
+  let wordsLength = [];
+  let average = null;
   for (let i = 0; i < wordsArray.length; i++) {
-    wordsLength = wordsLength + wordsArray[i].length;
+    wordsLength[i] = wordsArray[i].length;
   }
 
-  average = wordsLength / (wordsArray.length + 1);
-  console.log(Math.round(average));
-
-  return Math.round(average);
+  if (wordsArray.length > 0) {
+    average = sumArray(wordsLength) / wordsArray.length;
+  } else {
+    average = null;
+  }
+  return average;
 }
 
 // Iteration #5: Unique arrays
@@ -185,15 +204,8 @@ const matrix2 = [
   [2, 1, 1, 1],
   [1, 1, 1, 1]
 ];
-const matrix3 = [
-  [1, 2, 3, 4, 5],
-  [1, 20, 3, 4, 5],
-  [1, 20, 3, 4, 5],
-  [1, 20, 3, 4, 5],
-  [1, 4, 3, 4, 5]
-];
 
-console.log('El producto más alto es: ',greatestProduct(matrix3));
+console.log("El producto más alto es: ", greatestProduct(matrix3));
 
 function greatestProduct(matrix) {
   let candidateProduct = 0;
@@ -201,20 +213,19 @@ function greatestProduct(matrix) {
   for (let i = 0; i < matrix.length - 1; i++) {
     for (let j = 0; j < matrix.length - 1; j++) {
       if (i === 0 || j === 0) {
-        product = matrix[i][j] * matrix[i][j + 1] * matrix[i + 1][j];
+        product = matrix[i][j + 1] * matrix[i + 1][j];
       } else if (i === matrix.length - 1 || j === matrix.length - 1) {
-        product = matrix[i][j] * matrix[i][j - 11] * matrix[i - 1][j];
+        product = matrix[i][j - 11] * matrix[i - 1][j];
       } else {
         product =
-          matrix[i][j] *
           matrix[i - 1][j] *
           matrix[i][j - 1] *
           matrix[i][j + 1] *
           matrix[i + 1][j];
       }
       candidateProduct < product
-      ? (candidateProduct = product)
-      : (candidateProduct = candidateProduct);
+        ? (candidateProduct = product)
+        : (candidateProduct = candidateProduct);
     }
   }
   return candidateProduct;
